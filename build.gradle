@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+
+    compile 'javax.json:javax.json-api:1.0'
+
+    compile 'org.glassfish:javax.json:1.0.4'
+
+    // Use JUnit test framework
+    testCompile 'junit:junit:4.12'
+}
