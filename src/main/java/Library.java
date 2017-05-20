@@ -6,3 +6,34 @@ public class Library {
         return true;
     }
 }
+
+//public class ImmutableSetCollector<T>
+//        implements Collector<T, ImmutableSet.Builder<T>, ImmutableSet<T>> {
+//    @Override
+//    public Supplier<ImmutableSet.Builder<T>> supplier() {
+//        return ImmutableSet::builder;
+//    }
+//
+//    @Override
+//    public BiConsumer<ImmutableSet.Builder<T>, T> accumulator() {
+//        return (builder, t) -> builder.add(t);
+//    }
+//
+//    @Override
+//    public BinaryOperator<ImmutableSet.Builder<T>> combiner() {
+//        return (left, right) -> {
+//            left.addAll(right.build());
+//            return left;
+//        };
+//    }
+//
+//    @Override
+//    public Function<ImmutableSet.Builder<T>, ImmutableSet<T>> finisher() {
+//        return ImmutableSet.Builder::build;
+//    }
+//
+//    @Override
+//    public Set<Characteristics> characteristics() {
+//        return EnumSet.of(Characteristics.UNORDERED);
+//    }
+//}

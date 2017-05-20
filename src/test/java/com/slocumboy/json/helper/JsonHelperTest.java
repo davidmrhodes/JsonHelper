@@ -1,8 +1,11 @@
 package com.slocumboy.json.helper;
 
+import javafx.util.Pair;
 import org.junit.Test;
 
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -43,5 +46,24 @@ public class JsonHelperTest {
         assertEquals(expectedPrettyPrint, actualPrettyPrint);
 
     }
-    
+
+    @Test
+    public void testReplaceNotNested() {
+        JsonHelper helper = new JsonHelper();
+        String jsonString = "{\"key1\" : \"keyValue1\", \"key2\" : \"keyValue2\"}";
+
+        JsonObject jsonObject = helper.createFromString(jsonString);
+
+        JsonObject newObject = Json.createObjectBuilder().add("key3", "keyValue3").build();
+
+        JsonObject actual = helper.replace(jsonObject, "key2", new Pair<String, JsonValue>("key3", newObject.getJsonString("key3")));
+
+        assertEquals(2, actual.size());
+
+        assertEquals("keyValue1", actual.getString("key1"));
+
+        assertEquals("keyValue3", actual.getString("key3"));
+
+    }
+
 }

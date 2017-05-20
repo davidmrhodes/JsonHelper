@@ -1,9 +1,13 @@
 package com.slocumboy.json.helper;
 
+import javafx.util.Pair;
+import jdk.nashorn.internal.ir.ObjectNode;
+
 import javax.json.*;
 import javax.json.stream.JsonGenerator;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,5 +49,18 @@ public class JsonHelper {
         }
 
         return config;
+    }
+
+    public JsonObject replace(JsonStructure json, String key, Pair<String, JsonValue> replacement) {
+        JsonObject jsonObject = (JsonObject)json;
+        JsonObject newJsonObject = jsonObject.entrySet().stream()
+                .map( entry -> {
+                    if (entry.getKey().equals(key)) {
+                        return new AbstractMap.SimpleEntry<String, JsonValue>(replacement.getKey(), replacement.getValue());
+                    } else {
+                        return entry;
+                    }
+                }).collect(new JsonObjectCollector());
+        return newJsonObject;
     }
 }
