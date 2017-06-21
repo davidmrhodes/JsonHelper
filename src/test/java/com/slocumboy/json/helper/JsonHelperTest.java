@@ -1,11 +1,14 @@
 package com.slocumboy.json.helper;
 
 import javafx.util.Pair;
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -14,6 +17,13 @@ import static org.junit.Assert.assertTrue;
  * Created by davidrho on 5/11/17.
  */
 public class JsonHelperTest {
+
+    private TestUtils testUtils;
+
+    @Before
+    public void setup() throws Exception {
+        testUtils = new TestUtils();
+    }
 
     @Test
     public void testCreateJsonFromString() {
@@ -56,7 +66,7 @@ public class JsonHelperTest {
 
         JsonObject newObject = Json.createObjectBuilder().add("key3", "keyValue3").build();
 
-        JsonObject actual = helper.replace(jsonObject, "key2", new Pair<String, JsonValue>("key3", newObject.getJsonString("key3")));
+        JsonObject actual = (JsonObject) helper.replace(jsonObject, "key2", new Pair<String, JsonValue>("key3", newObject.getJsonString("key3")));
 
         assertEquals(2, actual.size());
 
@@ -65,5 +75,29 @@ public class JsonHelperTest {
         assertEquals("keyValue3", actual.getString("key3"));
 
     }
+
+//    @Test
+//    public void testReplaceNested() throws IOException {
+//        JsonHelper helper = new JsonHelper();
+//        String jsonString = testUtils.readJsonFile("nestedJson.json");
+//
+//        JsonObject jsonObject = helper.createFromString(jsonString);
+//
+//        JsonObject newObject = Json.createObjectBuilder().add("key3", "keyValue3").build();
+//
+//        JsonObject actual = (JsonObject) helper.replace(jsonObject, "key2Level3",
+//                new Pair<String, JsonValue>("key3", newObject.getJsonString("key3Level3")));
+//
+//        JsonObject object1Level1 = actual.getJsonObject("key1Level1");
+//
+//        JsonObject object1Level2 = object1Level1.getJsonObject("key1Level2");
+//
+//        assertEquals(2, object1Level1.size());
+//
+//        assertEquals("key1Value1", actual.getString("key1Level3"));
+//
+//        assertEquals("keyValue3", actual.getString("key3Level3"));
+//
+//    }
 
 }

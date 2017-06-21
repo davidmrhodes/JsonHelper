@@ -51,10 +51,19 @@ public class JsonHelper {
         return config;
     }
 
-    public JsonObject replace(JsonStructure json, String key, Pair<String, JsonValue> replacement) {
-        JsonObject jsonObject = (JsonObject)json;
+    public JsonStructure replace(JsonStructure json, String key, Pair<String, JsonValue> replacement) {
+
+        if (json instanceof JsonObject) {
+            JsonObject jsonObject = (JsonObject) json;
+            return replaceInObject(jsonObject, key, replacement);
+        } else {
+            return null;
+        }
+    }
+
+    private JsonObject replaceInObject(JsonObject jsonObject, String key, Pair<String, JsonValue> replacement) {
         JsonObject newJsonObject = jsonObject.entrySet().stream()
-                .map( entry -> {
+                .map(entry -> {
                     if (entry.getKey().equals(key)) {
                         return new AbstractMap.SimpleEntry<String, JsonValue>(replacement.getKey(), replacement.getValue());
                     } else {
@@ -62,5 +71,6 @@ public class JsonHelper {
                     }
                 }).collect(new JsonObjectCollector());
         return newJsonObject;
+
     }
 }

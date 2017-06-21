@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import javax.json.JsonObject;
 
-import static com.sun.corba.se.impl.encoding.CodeSetComponentInfo.createFromString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
